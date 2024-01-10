@@ -1,16 +1,16 @@
 package gsc.healingmeal.survey.contoroller;
 
-import gsc.healingmeal.member.dto.UserSearchDto;
-import gsc.healingmeal.member.service.UserJoinService;
+
 import gsc.healingmeal.survey.doamin.Survey;
 import gsc.healingmeal.survey.dto.FilterFoodRequestDto;
 import gsc.healingmeal.survey.dto.SurveyRequestDto;
 import gsc.healingmeal.survey.service.SurveyService;
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SurveyController {

@@ -5,8 +5,7 @@ import lombok.*;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 public class Food {
@@ -24,5 +23,4 @@ public class Food {
     private String carbohydrate;
     private String sugar;
     private String sodium;
-
 }

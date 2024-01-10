@@ -1,6 +1,7 @@
 package gsc.healingmeal.member.handler;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -19,5 +20,7 @@ public class CustomAuthenticationSuccessHandler  implements AuthenticationSucces
         HttpSession session = request.getSession();
         session.setMaxInactiveInterval(1800);
         log.info(authentication.getPrincipal().toString()+" login");
+        Cookie cookie = new Cookie("SESSION", session.getId());
+        response.addCookie(cookie);
     }
 }

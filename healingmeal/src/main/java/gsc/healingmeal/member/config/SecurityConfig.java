@@ -34,14 +34,13 @@ public class SecurityConfig extends Exception {
                         var cors = new CorsConfiguration();
                         //배포 시 손봐야 함.
                         //허용할 origin
-                        cors.setAllowedOrigins(List.of("*"));
+                        cors.setAllowedOrigins(List.of("http://localhost:5173"));
                         //허용할 method(CRUD)
                         cors.setAllowedMethods(List.of("*"));
                         //허용할 헤더
                         cors.setAllowedHeaders(List.of("*"));
                         cors.setAllowCredentials(true);
-                        //아래는 서버가 응답할 때 json을 js에서 처리할 수 있게 설정하는 것이다.
-                        //cors.setAllowCredentials(true);
+                        cors.setMaxAge(3000L);
                         return cors;
                     };
                     c.configurationSource(source);
@@ -51,7 +50,7 @@ public class SecurityConfig extends Exception {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/**", "/user/**","/api/email-check").permitAll()
-                        .anyRequest().hasAnyRole("USER")
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement((session)-> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)//필요 시 세션 생성
@@ -66,10 +65,10 @@ public class SecurityConfig extends Exception {
                                 .passwordParameter("password")
                                 .loginProcessingUrl("/user/login") //로그인 경로
                                 .successHandler(customAuthenticationSuccessHandler) //로그인 성공 시 핸들러
-                                .failureHandler(customAuthenticationFailureHandler) //로그인 실패 시 핸들러
-                                .defaultSuccessUrl("/")) // 로그인 성공 시 리턴되는 위치
+                                .failureHandler(customAuthenticationFailureHandler)) //로그인 실패 시 핸들러
+                                //.defaultSuccessUrl("/")) // 로그인 성공 시 리턴되는 위치
                 .logout((logout)-> logout.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
-                        .logoutSuccessUrl("/") //로그아웃 성공 시 리턴되는 위치
+                        .logoutSuccessUrl("/successlogout") //로그아웃 성공 시 리턴되는 위치
                         .invalidateHttpSession(true)); // 로그아웃 시 인증정보 삭제 및 세션 무효화
 
         return http.build();

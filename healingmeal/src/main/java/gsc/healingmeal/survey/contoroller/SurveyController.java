@@ -21,7 +21,7 @@ public class SurveyController {
         this.surveyService = surveyService;
     }
 
-    @PostMapping("/{userId}/servey")
+    @PostMapping("/{userId}/survey")
     public ResponseEntity<Long> saveServey(@RequestBody SurveyRequestDto surveyRequestDto, @PathVariable Long userId) {
         Survey survey = surveyService.submitSurvey(surveyRequestDto, userId);
         return new ResponseEntity<>(survey.getId(), HttpStatus.OK); // 해당 값을 프론트에서 보내서 filterFood 저장할 때 url로 매핑.

@@ -1,5 +1,6 @@
 package gsc.healingmeal.member.controller;
 
+import gsc.healingmeal.member.repository.UserRepository;
 import gsc.healingmeal.member.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

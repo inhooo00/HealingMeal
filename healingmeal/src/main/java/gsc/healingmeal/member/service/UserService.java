@@ -21,4 +21,9 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Not Found User"));
         return new PrincipalDetail(user);
     }
+
+    public Long userID(String authenticatedPrincipal){
+        User user = userRepository.findByLoginId(authenticatedPrincipal).orElseThrow(()->new RuntimeException("Unbelieved error. principal is not found."));
+        return user.getId();
+    }
 }

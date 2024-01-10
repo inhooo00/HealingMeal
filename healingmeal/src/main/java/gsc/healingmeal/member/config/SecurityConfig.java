@@ -39,6 +39,7 @@ public class SecurityConfig extends Exception {
                         cors.setAllowedMethods(List.of("*"));
                         //허용할 헤더
                         cors.setAllowedHeaders(List.of("*"));
+                        cors.setAllowCredentials(true);
                         //아래는 서버가 응답할 때 json을 js에서 처리할 수 있게 설정하는 것이다.
                         //cors.setAllowCredentials(true);
                         return cors;

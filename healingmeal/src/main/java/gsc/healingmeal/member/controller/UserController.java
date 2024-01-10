@@ -32,7 +32,7 @@ public class UserController {
         HttpSession session = request.getSession(false);
         Cookie cookie = new Cookie("SessionID",session.getId());
         cookie.setMaxAge(300000);
-        cookie.setSecure(true);
+        cookie.setSecure(false);
         response.addCookie(cookie);
         return new ResponseEntity<>(session.getId(), HttpStatus.OK);
     }

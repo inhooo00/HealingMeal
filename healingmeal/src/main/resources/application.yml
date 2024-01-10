@@ -35,3 +35,8 @@ logging.level:
 
 server:
   port: 8080
+  servlet:
+    session:
+      cookie:
+        same-site: None
+        secure: true

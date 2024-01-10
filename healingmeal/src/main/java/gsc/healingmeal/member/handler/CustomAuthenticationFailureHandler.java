@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -32,5 +31,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
         }
 
         response.sendError(500, errorMessage);
+
+        response.sendRedirect("/login");
     }
 }

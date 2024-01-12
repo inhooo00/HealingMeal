@@ -2,6 +2,9 @@ package gsc.healingmeal.member.domain;
 
 import gsc.healingmeal.member.execption.InvalidEmailAddressException;
 import gsc.healingmeal.member.execption.InvalidUserException;
+import gsc.healingmeal.survey.doamin.FilterFood;
+import gsc.healingmeal.survey.doamin.Survey;
+import gsc.healingmeal.survey.doamin.SurveyResult;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,6 +44,11 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Survey survey;
+
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private SurveyResult surveyResult;
 
     @Builder
     private User(String loginId, String password, String name, String email, String birthDate, Gender gender, String phoneNumber, Role role) {

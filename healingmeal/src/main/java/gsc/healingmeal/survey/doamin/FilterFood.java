@@ -37,7 +37,7 @@ public class FilterFood {
 
     private String dairyProducts; // 유제품류
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "survey_id")
     private Survey survey;
 }

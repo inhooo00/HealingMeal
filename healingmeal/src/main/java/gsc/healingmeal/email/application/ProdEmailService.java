@@ -63,14 +63,6 @@ public class ProdEmailService implements EmailService {
         return message; // 이 message 객체는 이메일의 제목, 수신자, 발신자, 본문 등을 포함하고 있음.
     }
 
-
-
-    private void validateEmail(boolean isMatch) {
-        if (!isMatch) {
-            throw new InvalidEmailAddressException();
-        }
-    }
-
     private String mailContents() {
         return "<div style='margin:20px;'>" +
                 "<h1> 👋🏻 HealingMeal 회원가입 인증 메일 </h1><br>" +

@@ -12,6 +12,7 @@ public class SurveyResultDto {
     private String carbohydrate;
     private String fat;
 
+
     public SurveyResultDto(String Kcal, String protein, String carbohydrate,String fat) {
         this.Kcal = Kcal;
         this.protein = protein;

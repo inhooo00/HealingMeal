@@ -27,4 +27,15 @@ public class SurveyResult {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    // 정적 팩토리 메서드
+    public static SurveyResult createSurveyResult(String kcal, String protein, String fat, String carbohydrate, User user) {
+        return SurveyResult.builder()
+                .Kcal(kcal)
+                .protein(protein)
+                .fat(fat)
+                .carbohydrate(carbohydrate)
+                .user(user)
+                .build();
+    }
 }

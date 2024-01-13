@@ -2,6 +2,7 @@ package gsc.healingmeal.survey.doamin;
 
 import gsc.healingmeal.member.domain.Gender;
 import gsc.healingmeal.member.domain.User;
+import gsc.healingmeal.survey.dto.SurveyRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,5 +53,22 @@ public class Survey {
     @JoinColumn(name = "user_id")
     private User user;
 
+    // 정적 팩토리 메서드
+    public static Survey createSurvey(SurveyRequestDto surveyRequestDto, User user) {
+        return Survey.builder()
+                .age(surveyRequestDto.getAge())
+                .destination(surveyRequestDto.getDestination())
+                .diabetesType(surveyRequestDto.getDiabetesType())
+                .numberOfExercises(surveyRequestDto.getNumberOfExercises())
+                .height(surveyRequestDto.getHeight())
+                .weight(surveyRequestDto.getWeight())
+                .gender(surveyRequestDto.getGender())
+                .standardWeight(surveyRequestDto.getStandardWeight())
+                .bodyMassIndex(surveyRequestDto.getBodyMassIndex())
+                .caloriesNeededPerDay(surveyRequestDto.getCaloriesNeededPerDay())
+                .weightLevel(surveyRequestDto.getWeightLevel())
+                .user(user)
+                .build();
+    }
 
 }

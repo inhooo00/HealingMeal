@@ -14,6 +14,10 @@ import gsc.healingmeal.survey.repository.SurveyResultRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static gsc.healingmeal.survey.doamin.FilterFood.createFilterFood;
+import static gsc.healingmeal.survey.doamin.Survey.createSurvey;
+import static gsc.healingmeal.survey.doamin.SurveyResult.createSurveyResult;
+
 @Service
 public class SurveyService {
 
@@ -32,66 +36,24 @@ public class SurveyService {
 
     @Transactional
     public Survey submitSurvey(SurveyRequestDto surveyRequestDto, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        Survey survey = createSurvey(surveyRequestDto, user);
 
-
-        Survey survey = Survey.builder()
-                .age(surveyRequestDto.getAge())
-                .destination(surveyRequestDto.getDestination())
-                .diabetesType(surveyRequestDto.getDiabetesType())
-                .numberOfExercises(surveyRequestDto.getNumberOfExercises())
-                .height(surveyRequestDto.getHeight())
-                .weight(surveyRequestDto.getWeight())
-                .gender(surveyRequestDto.getGender())
-                .standardWeight(surveyRequestDto.getStandardWeight())
-                .bodyMassIndex(surveyRequestDto.getBodyMassIndex())
-                .caloriesNeededPerDay(surveyRequestDto.getCaloriesNeededPerDay())
-                .weightLevel(surveyRequestDto.getWeightLevel())
-                .user(userRepository.findById(userId).orElseThrow())
-                .build();
         surveyRepository.save(survey);
 
-        SurveyResult surveyResult = SurveyResult.builder()
-                .Kcal(survey.getCaloriesNeededPerDay().toString())
-                .protein(proteinCalculation(survey.getCaloriesNeededPerDay().toString()).toString())
-                .fat(fatCalculation(survey.getCaloriesNeededPerDay().toString()).toString())
-                .carbohydrate(carbohydrateCalculation(survey.getCaloriesNeededPerDay().toString()).toString())
-                .user(userRepository.findById(userId).orElseThrow())
-                .build();
+        String kcal = survey.getCaloriesNeededPerDay().toString();
+        SurveyResult surveyResult = createSurveyResult(
+                kcal,
+                proteinCalculation(kcal).toString(),
+                fatCalculation(kcal).toString(),
+                carbohydrateCalculation(kcal).toString(),
+                user
+        );
+
         surveyResultRepository.save(surveyResult);
 
         return survey;
     }
-
-    @Transactional
-    public FilterFood submitFilterFood(FilterFoodRequestDto filterFoodRequestDto, Long surveyId) {
-        FilterFood filterFood = FilterFood.builder()
-                .stewsAndHotpots(filterFoodRequestDto.getStewsAndHotpots())
-                .steamedFood(filterFoodRequestDto.getSteamedFood())
-                .stirFriedFood(filterFoodRequestDto.getStirFriedFood())
-                .grilledFood(filterFoodRequestDto.getGrilledFood())
-                .vegetableFood(filterFoodRequestDto.getVegetableFood())
-                .stewedFood(filterFoodRequestDto.getStewedFood())
-                .pancakeFood(filterFoodRequestDto.getPancakeFood())
-                .breadAndConfectionery(filterFoodRequestDto.getBreadAndConfectionery())
-                .beveragesAndTeas(filterFoodRequestDto.getBeveragesAndTeas())
-                .dairyProducts(filterFoodRequestDto.getDairyProducts())
-                .survey(surveyRepository.findById(surveyId).orElseThrow())
-                .build();
-
-        filterFoodRepository.save(filterFood);
-        return filterFood;
-    }
-
-    // 설문 조사 결과
-    public SurveyResultDto surveyResult(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow();
-        SurveyResult surveyResult = surveyResultRepository.findSurveyResultByUser(user);
-        SurveyResultDto surveyResultDto = new SurveyResultDto(
-                surveyResult.getKcal(),surveyResult.getProtein(),surveyResult.getCarbohydrate(), surveyResult.getFat());
-
-        return surveyResultDto;
-    }
-
     private Double proteinCalculation(String Kcal) {
         double result = Double.parseDouble(Kcal) * 13.5 / 400;
         return Math.round(result * 10) / 10.0;
@@ -106,4 +68,23 @@ public class SurveyService {
         double result = Double.parseDouble(Kcal) * 62.5 / 400;
         return Math.round(result * 10) / 10.0;
     }
+
+    @Transactional
+    public FilterFood submitFilterFood(FilterFoodRequestDto filterFoodRequestDto, Long surveyId) {
+        Survey survey = surveyRepository.findById(surveyId).orElseThrow();
+        FilterFood filterFood = createFilterFood(filterFoodRequestDto, survey);
+
+        filterFoodRepository.save(filterFood);
+        return filterFood;
+    }
+    // 설문 조사 결과
+    public SurveyResultDto surveyResult(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        SurveyResult surveyResult = surveyResultRepository.findSurveyResultByUser(user);
+
+        return new SurveyResultDto(
+                surveyResult.getKcal(),surveyResult.getProtein(),surveyResult.getCarbohydrate(), surveyResult.getFat());
+    }
+
+
 }

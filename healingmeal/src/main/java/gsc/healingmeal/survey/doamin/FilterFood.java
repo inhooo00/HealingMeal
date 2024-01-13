@@ -1,5 +1,6 @@
 package gsc.healingmeal.survey.doamin;
 
+import gsc.healingmeal.survey.dto.FilterFoodRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,4 +41,21 @@ public class FilterFood {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "survey_id")
     private Survey survey;
+
+    // 정적 팩토리 메서드
+    public static FilterFood createFilterFood(FilterFoodRequestDto filterFoodRequestDto, Survey survey) {
+        return FilterFood.builder()
+                .stewsAndHotpots(filterFoodRequestDto.getStewsAndHotpots())
+                .steamedFood(filterFoodRequestDto.getSteamedFood())
+                .stirFriedFood(filterFoodRequestDto.getStirFriedFood())
+                .grilledFood(filterFoodRequestDto.getGrilledFood())
+                .vegetableFood(filterFoodRequestDto.getVegetableFood())
+                .stewedFood(filterFoodRequestDto.getStewedFood())
+                .pancakeFood(filterFoodRequestDto.getPancakeFood())
+                .breadAndConfectionery(filterFoodRequestDto.getBreadAndConfectionery())
+                .beveragesAndTeas(filterFoodRequestDto.getBeveragesAndTeas())
+                .dairyProducts(filterFoodRequestDto.getDairyProducts())
+                .survey(survey)
+                .build();
+    }
 }

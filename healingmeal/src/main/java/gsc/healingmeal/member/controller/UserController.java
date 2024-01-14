@@ -1,9 +1,7 @@
 package gsc.healingmeal.member.controller;
 
-import gsc.healingmeal.member.repository.UserRepository;
 import gsc.healingmeal.member.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,13 +29,17 @@ public class UserController {
     public ResponseEntity logoutSesstion() {
         return new ResponseEntity("Login Or Authorization success", HttpStatus.OK);
     }
-        //securityconfig에 로그인폼 관련 설정을 해놨기에 로그인 API작성이 불필요하나 테스트용으로 작성
 
     @GetMapping("/")
-        public ResponseEntity<String> success (HttpServletRequest request, HttpServletResponse response, Authentication authentication){
-            HttpSession session = request.getSession();
-            session.setMaxInactiveInterval(1800);
-            String user_id = userService.userID(authentication.getName()).toString();
-            return new ResponseEntity<>(user_id, HttpStatus.OK);
-        }
+    public ResponseEntity<String> success (HttpServletRequest request, Authentication authentication){
+        HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(1800);
+        String user_id = userService.userID(authentication.getName()).toString();
+        return new ResponseEntity<>(user_id, HttpStatus.OK);
     }
+
+    @GetMapping("/user/confirm")
+    public ResponseEntity<String> confirm (HttpServletRequest request){
+        return new ResponseEntity<>(userService.loginConfirm(request), HttpStatus.OK);
+    }
+}

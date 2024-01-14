@@ -38,7 +38,7 @@ public class UserService implements UserDetailsService {
         Principal user = request.getUserPrincipal();
         if (user != null){
             User loginUser = userRepository.findByLoginId(user.getName().toString()).orElseThrow(()-> new InvalidUserException("로그인 상태가 아닙니다."));
-            return user.getName();
+            return loginUser.getName();
         }
         return new String("not login");
     }

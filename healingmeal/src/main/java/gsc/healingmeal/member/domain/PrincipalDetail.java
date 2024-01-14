@@ -1,15 +1,11 @@
-package gsc.healingmeal.member.dto;
+package gsc.healingmeal.member.domain;
 
-import gsc.healingmeal.member.domain.User;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @Getter
 public class PrincipalDetail implements UserDetails {

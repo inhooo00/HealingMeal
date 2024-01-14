@@ -1,7 +1,7 @@
 package gsc.healingmeal.member.service;
 
 import gsc.healingmeal.member.domain.User;
-import gsc.healingmeal.member.dto.PrincipalDetail;
+import gsc.healingmeal.member.domain.PrincipalDetail;
 import gsc.healingmeal.member.execption.InvalidUserException;
 import gsc.healingmeal.member.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,6 +40,6 @@ public class UserService implements UserDetailsService {
             User loginUser = userRepository.findByLoginId(user.getName().toString()).orElseThrow(()-> new InvalidUserException("로그인 상태가 아닙니다."));
             return loginUser.getName();
         }
-        return new String("not login");
+        throw new InvalidUserException("not login");
     }
 }

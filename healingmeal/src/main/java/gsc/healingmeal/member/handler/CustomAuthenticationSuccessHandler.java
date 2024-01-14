@@ -1,6 +1,6 @@
 package gsc.healingmeal.member.handler;
 
-import gsc.healingmeal.member.dto.PrincipalDetail;
+import gsc.healingmeal.member.domain.PrincipalDetail;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

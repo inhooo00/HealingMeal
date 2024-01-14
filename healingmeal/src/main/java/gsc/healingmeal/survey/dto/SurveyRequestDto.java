@@ -1,15 +1,16 @@
 package gsc.healingmeal.survey.dto;
 
 import gsc.healingmeal.member.domain.Gender;
+import gsc.healingmeal.member.repository.UserRepository;
+import gsc.healingmeal.survey.doamin.Survey;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class SurveyRequestDto {
 
     private Long age;
@@ -34,5 +35,4 @@ public class SurveyRequestDto {
     private Long caloriesNeededPerDay; // 하루 필요 열량
 
     private String weightLevel; // 현재 체중 단계
-
 }

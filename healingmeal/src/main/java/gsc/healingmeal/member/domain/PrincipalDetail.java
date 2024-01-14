@@ -1,4 +1,4 @@
-package gsc.healingmeal.member.dto;
+package gsc.healingmeal.member.domain;
 
 import gsc.healingmeal.member.domain.User;
 import lombok.AllArgsConstructor;

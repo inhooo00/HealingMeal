@@ -31,7 +31,5 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
         }
 
         response.sendError(500, errorMessage);
-
-        response.sendRedirect("/login");
     }
 }

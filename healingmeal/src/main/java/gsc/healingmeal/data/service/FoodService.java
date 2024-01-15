@@ -24,7 +24,7 @@ public class FoodService {
     @Transactional
     public void loadSave() throws Exception {
         JSONParser parser = new JSONParser();
-        Reader reader = new FileReader("/Users/inho/Downloads/-20240105.json");
+        Reader reader = new FileReader("C:/Users/본인것/Downloads/total.json");
         JSONArray records = (JSONArray) parser.parse(reader);
 
         for (Object record : records) {
@@ -35,12 +35,12 @@ public class FoodService {
                         .foodName(tmp.get("식품명").toString())
                         .foodCategory(tmp.get("식품대분류명").toString())
                         .representativeFoodName(tmp.get("대표식품명").toString())
-                        .Kcal(tmp.get("에너지(kcal)").toString())
-                        .protein(tmp.get("단백질(g)").toString())
-                        .fat(tmp.get("지방(g)").toString())
-                        .carbohydrate(tmp.get("탄수화물(g)").toString())
-                        .sugar(tmp.get("당류(g)").toString())
-                        .sodium(tmp.get("나트륨(mg)").toString())
+                        .Kcal(Integer.parseInt(tmp.get("에너지(kcal)").toString()))
+                        .protein(Float.parseFloat(tmp.get("단백질(g)").toString()))
+                        .fat(Float.parseFloat(tmp.get("지방(g)").toString()))
+                        .carbohydrate(Float.parseFloat(tmp.get("탄수화물(g)").toString()))
+                        .sugar(Float.parseFloat(tmp.get("당류(g)").toString()))
+                        .sodium(Integer.parseInt(tmp.get("나트륨(mg)").toString()))
                         .build();
 
                 foodRepository.save(food);

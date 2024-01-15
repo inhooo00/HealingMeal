@@ -90,5 +90,34 @@ public class SurveyService {
         return surveyRepository.existsSurveyByUserId(userId);
     }
 
+    @Transactional
+    public void surveyUpdateByUserId(Long userId, SurveyRequestDto surveyRequestDto) {
+        User user = userRepository.findById(userId).orElseThrow();
+        Survey survey = surveyRepository.findSurveyByUserId(userId);
+        survey.update(surveyRequestDto);
+        surveyRepository.save(survey);
 
+        String kcal = survey.getCaloriesNeededPerDay().toString();
+
+        SurveyResult newSurveyResult = createSurveyResult(
+                kcal,
+                proteinCalculation(kcal).toString(),
+                fatCalculation(kcal).toString(),
+                carbohydrateCalculation(kcal).toString(),
+                user
+        );
+
+        // 데이터베이스에서 기존의 surveyResult를 가져옴
+        SurveyResult existingSurveyResult = surveyResultRepository.findById(userId).orElseThrow();
+
+        // 기존의 surveyResult를 새로운 값으로 업데이트
+        existingSurveyResult.update(newSurveyResult);
+        surveyResultRepository.save(existingSurveyResult);
+    }
+    @Transactional
+    public void filterFoodUpdateBySurveyId(Long surveyId, FilterFoodRequestDto filterFoodRequestDto){
+        FilterFood filterFood = filterFoodRepository.findFilterFoodBySurveyId(surveyId);
+        filterFood.update(filterFoodRequestDto);
+        filterFoodRepository.save(filterFood);
+    }
 }

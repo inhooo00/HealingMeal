@@ -3,7 +3,6 @@ package gsc.healingmeal.survey.contoroller;
 
 import gsc.healingmeal.survey.doamin.FilterFood;
 import gsc.healingmeal.survey.doamin.Survey;
-import gsc.healingmeal.survey.doamin.SurveyResult;
 import gsc.healingmeal.survey.dto.FilterFoodRequestDto;
 import gsc.healingmeal.survey.dto.SurveyRequestDto;
 import gsc.healingmeal.survey.dto.SurveyResultDto;
@@ -40,7 +39,7 @@ public class SurveyController {
         return new ResponseEntity<>(surveyResultDto, HttpStatus.OK);
     }
 
-    // 설문조사 확인 api
+    // 설문 조사 확인
     @GetMapping("/{userId}/checkingSurvey")
     public ResponseEntity<String> checkingSurvey(@PathVariable Long userId){
         if (surveyService.checkingSurvey(userId)){
@@ -49,4 +48,17 @@ public class SurveyController {
         return new ResponseEntity<>("설문 내용 없음.",HttpStatus.OK);
     }
 
+    // 설문 조사 수정
+    @PatchMapping("/{userId}/change/survey")
+    public ResponseEntity<String> changeSurvey(@PathVariable Long userId,@RequestBody SurveyRequestDto surveyRequestDto) {
+       surveyService.surveyUpdateByUserId(userId, surveyRequestDto);
+        return new ResponseEntity<>("성공", HttpStatus.OK);
+    }
+
+    // 음식 필터 수정
+    @PatchMapping("/{surveyId}/change/filterFood")
+    public ResponseEntity<String> changeFillterFood(@PathVariable Long surveyId,@RequestBody FilterFoodRequestDto filterFoodRequestDto) {
+        surveyService.filterFoodUpdateBySurveyId(surveyId,filterFoodRequestDto);
+        return new ResponseEntity<>("성공", HttpStatus.OK);
+    }
 }

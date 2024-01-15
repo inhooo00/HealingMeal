@@ -1,6 +1,8 @@
 package gsc.healingmeal.survey.doamin;
 
 import gsc.healingmeal.member.domain.User;
+import gsc.healingmeal.survey.dto.SurveyRequestDto;
+import gsc.healingmeal.survey.dto.SurveyResultDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,5 +39,12 @@ public class SurveyResult {
                 .carbohydrate(carbohydrate)
                 .user(user)
                 .build();
+    }
+
+    public void update(SurveyResult surveyResult){
+        this.Kcal = surveyResult.getKcal();
+        this.protein = surveyResult.getProtein();
+        this.carbohydrate = surveyResult.getCarbohydrate();
+        this.fat = surveyResult.getFat();
     }
 }

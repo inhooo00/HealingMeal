@@ -2,6 +2,8 @@ package gsc.healingmeal.member.service;
 
 import gsc.healingmeal.member.domain.Role;
 import gsc.healingmeal.member.domain.User;
+import gsc.healingmeal.member.dto.CheckingPasswordDto;
+import gsc.healingmeal.member.dto.JoinChangeDto;
 import gsc.healingmeal.member.dto.JoinRequestDto;
 import gsc.healingmeal.member.execption.InvalidUserException;
 import gsc.healingmeal.member.repository.UserRepository;
@@ -16,9 +18,10 @@ public class UserJoinService {
     private final UserRepository userRepository;
 
 
-    public UserJoinService(PasswordEncoder passwordEncoder,UserRepository userRepository){
+    public UserJoinService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
-        this.userRepository = userRepository;}
+        this.userRepository = userRepository;
+    }
 
 
     @Transactional
@@ -42,21 +45,33 @@ public class UserJoinService {
         userRepository.save(user);
     }
 
-    private void validateDuplicateLoginId(User user){
-        if(userRepository.existsByLoginId(user.getLoginId())){
+    private void validateDuplicateLoginId(User user) {
+        if (userRepository.existsByLoginId(user.getLoginId())) {
             throw new InvalidUserException("This ID is already taken.");
         }
     }
 
-    private void validateDuplicatePhoneNumber(User user){
-        if (userRepository.existsByPhoneNumber(user.getPhoneNumber())){
+    private void validateDuplicatePhoneNumber(User user) {
+        if (userRepository.existsByPhoneNumber(user.getPhoneNumber())) {
             throw new InvalidUserException("This phone number is already in use.");
         }
     }
+
     public boolean isLoginIdDuplicate(String loginId) {
         // 아이디 중복확인
         return userRepository.existsByLoginId(loginId);
     }
 
+    @Transactional
+    public void updateByUserId(Long userId, JoinChangeDto joinChangeDto) {
 
+        User user = userRepository.findById(userId).orElseThrow();
+        user.update(joinChangeDto);
+        userRepository.save(user);
+    }
+
+    public boolean checkingPassword(Long userId, CheckingPasswordDto checkingPasswordDto) {
+        User user = userRepository.findById(userId).orElseThrow();
+        return passwordEncoder.matches(checkingPasswordDto.getPassword(), user.getPassword());
+    }
 }

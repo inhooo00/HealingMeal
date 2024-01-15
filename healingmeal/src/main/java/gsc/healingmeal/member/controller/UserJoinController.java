@@ -28,4 +28,6 @@ public class UserJoinController {
         }
         return new ResponseEntity<>("아이디가 이미 사용 중입니다.", HttpStatus.NOT_FOUND);
     }
+
+
 }

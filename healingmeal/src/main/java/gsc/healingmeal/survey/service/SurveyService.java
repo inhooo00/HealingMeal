@@ -86,5 +86,9 @@ public class SurveyService {
                 surveyResult.getKcal(),surveyResult.getProtein(),surveyResult.getCarbohydrate(), surveyResult.getFat());
     }
 
+    public boolean checkingSurvey(Long userId) {
+        return surveyRepository.existsSurveyByUserId(userId);
+    }
+
 
 }

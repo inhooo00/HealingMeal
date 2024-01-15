@@ -16,6 +16,10 @@ public class foodController {
     @GetMapping("load_save")
     public String loadSave() throws Exception {
         foodService.loadSave();
+        foodService.saveRiceCategoryFoods();
+        foodService.saveSnackOrTeaCategoryFoods();
+        foodService.saveSideDishCategoryFoods();
+        foodService.saveMainDishCategoryFoods();
         return "download_success";
     }
 }

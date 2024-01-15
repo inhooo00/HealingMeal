@@ -1,8 +1,8 @@
 package gsc.healingmeal.data.service;
 
 
-import gsc.healingmeal.data.domain.Food;
-import gsc.healingmeal.data.repository.FoodRepository;
+import gsc.healingmeal.data.domain.*;
+import gsc.healingmeal.data.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileReader;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @EnableScheduling
@@ -20,6 +22,10 @@ import java.io.Reader;
 public class FoodService {
 
     private final FoodRepository foodRepository;
+    private final RiceCategoryRepository riceCategoryRepository;
+    private final SideDishCategoryRepository sideDishCategoryRepository;
+    private final SnackOrTeaCategoryRepository snackCategoryRepository;
+    private final MainDishCategoryRepository mainDishCategoryRepository;
 
     @Transactional
     public void loadSave() throws Exception {
@@ -50,5 +56,95 @@ public class FoodService {
         }
 
     }
+    @Transactional
+    public void saveRiceCategoryFoods() {
+        List<Food> riceFoods = foodRepository.findByFoodCategory("밥류");
 
+        for (Food food : riceFoods) {
+            RiceCategory riceCategory = RiceCategory.builder()
+                    .foodName(food.getFoodName())
+                    .foodCategory(food.getFoodCategory())
+                    .representativeFoodName(food.getRepresentativeFoodName())
+                    .Kcal(food.getKcal())
+                    .protein(food.getProtein())
+                    .fat(food.getFat())
+                    .carbohydrate(food.getCarbohydrate())
+                    .sugar(food.getSugar())
+                    .sodium(food.getSodium())
+                    .build();
+
+            riceCategoryRepository.save(riceCategory);
+        }
+    }
+    @Transactional
+    public void saveSideDishCategoryFoods() {
+        List<Food> sideDishFoods = new ArrayList<>();
+        sideDishFoods.addAll(foodRepository.findByFoodCategory("나물·숙채류"));
+        sideDishFoods.addAll(foodRepository.findByFoodCategory("조림류"));
+        sideDishFoods.addAll(foodRepository.findByFoodCategory("볶음류"));
+        sideDishFoods.addAll(foodRepository.findByFoodCategory("김치류"));
+        sideDishFoods.addAll(foodRepository.findByFoodCategory("젓갈류"));
+        sideDishFoods.addAll(foodRepository.findByFoodCategory("장아찌·절임류"));
+        sideDishFoods.addAll(foodRepository.findByFoodCategory("수·조·어·육류"));
+        sideDishFoods.addAll(foodRepository.findByFoodCategory("생채·무침류"));
+        for (Food food : sideDishFoods) {
+            SideDishCategory sideDishCategory = SideDishCategory.builder()
+                    .foodName(food.getFoodName())
+                    .foodCategory(food.getFoodCategory())
+                    .representativeFoodName(food.getRepresentativeFoodName())
+                    .Kcal(food.getKcal())
+                    .protein(food.getProtein())
+                    .fat(food.getFat())
+                    .carbohydrate(food.getCarbohydrate())
+                    .sugar(food.getSugar())
+                    .sodium(food.getSodium())
+                    .build();
+            sideDishCategoryRepository.save(sideDishCategory);
+        }
+    }
+    @Transactional
+    public void saveSnackOrTeaCategoryFoods() {
+        List<Food> snackOrTeaFoods = new ArrayList<>();
+        snackOrTeaFoods.addAll(foodRepository.findByFoodCategory("유제품류"));
+        snackOrTeaFoods.addAll(foodRepository.findByFoodCategory("음료 및 차류"));
+        snackOrTeaFoods.addAll(foodRepository.findByFoodCategory("빵 및 과자류"));
+
+        for (Food food : snackOrTeaFoods) {
+            SnackOrTeaCategory snackOrTeaCategory = SnackOrTeaCategory.builder()
+                    .foodName(food.getFoodName())
+                    .foodCategory(food.getFoodCategory())
+                    .representativeFoodName(food.getRepresentativeFoodName())
+                    .Kcal(food.getKcal())
+                    .protein(food.getProtein())
+                    .fat(food.getFat())
+                    .carbohydrate(food.getCarbohydrate())
+                    .sugar(food.getSugar())
+                    .sodium(food.getSodium())
+                    .build();
+            snackCategoryRepository.save(snackOrTeaCategory);
+        }
+
+    }
+    @Transactional
+    public void saveMainDishCategoryFoods() {
+        List<Food> mainDishFoods = new ArrayList<>();
+        mainDishFoods.addAll(foodRepository.findByFoodCategory("구이류"));
+        mainDishFoods.addAll(foodRepository.findByFoodCategory("찌개 및 전골류"));
+        mainDishFoods.addAll(foodRepository.findByFoodCategory("전·적 및 부침류"));
+        mainDishFoods.addAll(foodRepository.findByFoodCategory("찜류"));
+        for (Food food : mainDishFoods) {
+            MainDishCategory mainDishCategory = MainDishCategory.builder()
+                    .foodName(food.getFoodName())
+                    .foodCategory(food.getFoodCategory())
+                    .representativeFoodName(food.getRepresentativeFoodName())
+                    .Kcal(food.getKcal())
+                    .protein(food.getProtein())
+                    .fat(food.getFat())
+                    .carbohydrate(food.getCarbohydrate())
+                    .sugar(food.getSugar())
+                    .sodium(food.getSodium())
+                    .build();
+            mainDishCategoryRepository.save(mainDishCategory);
+        }
+    }
 }

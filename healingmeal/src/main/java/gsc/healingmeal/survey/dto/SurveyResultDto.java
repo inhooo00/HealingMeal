@@ -1,19 +1,18 @@
 package gsc.healingmeal.survey.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
 public class SurveyResultDto {
-    private String Kcal;
-    private String protein;
-    private String carbohydrate;
-    private String fat;
+    private int Kcal;
+    private float protein;
+    private float carbohydrate;
+    private float fat;
 
 
-    public SurveyResultDto(String Kcal, String protein, String carbohydrate,String fat) {
+    public SurveyResultDto(int Kcal, float protein, float carbohydrate, float fat) {
         this.Kcal = Kcal;
         this.protein = protein;
         this.carbohydrate = carbohydrate;

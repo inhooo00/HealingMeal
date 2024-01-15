@@ -41,12 +41,12 @@ public class SurveyService {
 
         surveyRepository.save(survey);
 
-        String kcal = survey.getCaloriesNeededPerDay().toString();
+        int kcal = Integer.parseInt(survey.getCaloriesNeededPerDay().toString());
         SurveyResult surveyResult = createSurveyResult(
                 kcal,
-                proteinCalculation(kcal).toString(),
-                fatCalculation(kcal).toString(),
-                carbohydrateCalculation(kcal).toString(),
+                Float.parseFloat(proteinCalculation(kcal).toString()),
+                Float.parseFloat(fatCalculation(kcal).toString()),
+                Float.parseFloat(carbohydrateCalculation(kcal).toString()),
                 user
         );
 
@@ -54,18 +54,18 @@ public class SurveyService {
 
         return survey;
     }
-    private Double proteinCalculation(String Kcal) {
-        double result = Double.parseDouble(Kcal) * 13.5 / 400;
+    private Double proteinCalculation(int Kcal) {
+        double result = Double.parseDouble(String.valueOf(Kcal)) * 13.5 / 400;
         return Math.round(result * 10) / 10.0;
     }
 
-    private Double fatCalculation(String Kcal) {
-        double result = Double.parseDouble(Kcal) * 20 / 900;
+    private Double fatCalculation(int Kcal) {
+        double result = Double.parseDouble(String.valueOf(Kcal)) * 20 / 900;
         return Math.round(result * 10) / 10.0;
     }
 
-    private Double carbohydrateCalculation(String Kcal) {
-        double result = Double.parseDouble(Kcal) * 62.5 / 400;
+    private Double carbohydrateCalculation(int Kcal) {
+        double result = Double.parseDouble(String.valueOf(Kcal)) * 62.5 / 400;
         return Math.round(result * 10) / 10.0;
     }
 

@@ -18,10 +18,10 @@ public class SurveyResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String Kcal;
-    private String protein;
-    private String carbohydrate;
-    private String fat;
+    private int Kcal;
+    private float protein;
+    private float carbohydrate;
+    private float fat;
 
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -29,7 +29,7 @@ public class SurveyResult {
     private User user;
 
     // 정적 팩토리 메서드
-    public static SurveyResult createSurveyResult(String kcal, String protein, String fat, String carbohydrate, User user) {
+    public static SurveyResult createSurveyResult(int kcal, float protein, float fat, float carbohydrate, User user) {
         return SurveyResult.builder()
                 .Kcal(kcal)
                 .protein(protein)

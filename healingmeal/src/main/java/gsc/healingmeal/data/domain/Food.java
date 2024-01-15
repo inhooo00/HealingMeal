@@ -17,10 +17,10 @@ public class Food {
     private String foodName;
     private String foodCategory;
     private String representativeFoodName;
-    private String Kcal;
-    private String protein;
-    private String fat;
-    private String carbohydrate;
-    private String sugar;
-    private String sodium;
+    private int Kcal;
+    private float protein;
+    private float fat;
+    private float carbohydrate;
+    private float sugar;
+    private int sodium;
 }

@@ -86,5 +86,37 @@ public class SurveyService {
                 surveyResult.getKcal(),surveyResult.getProtein(),surveyResult.getCarbohydrate(), surveyResult.getFat());
     }
 
+    public boolean checkingSurvey(Long userId) {
+        return surveyRepository.existsSurveyByUserId(userId);
+    }
 
+    @Transactional
+    public void surveyUpdateByUserId(Long userId, SurveyRequestDto surveyRequestDto) {
+        User user = userRepository.findById(userId).orElseThrow();
+        Survey survey = surveyRepository.findSurveyByUserId(userId);
+        survey.update(surveyRequestDto);
+        surveyRepository.save(survey);
+
+        int kcal = Integer.parseInt(survey.getCaloriesNeededPerDay().toString());
+        SurveyResult surveyResult = createSurveyResult(
+                kcal,
+                Float.parseFloat(proteinCalculation(kcal).toString()),
+                Float.parseFloat(fatCalculation(kcal).toString()),
+                Float.parseFloat(carbohydrateCalculation(kcal).toString()),
+                user
+        );
+
+        // 데이터베이스에서 기존의 surveyResult를 가져옴
+        SurveyResult existingSurveyResult = surveyResultRepository.findById(userId).orElseThrow();
+
+        // 기존의 surveyResult를 새로운 값으로 업데이트
+        existingSurveyResult.update(surveyResult);
+        surveyResultRepository.save(existingSurveyResult);
+    }
+    @Transactional
+    public void filterFoodUpdateBySurveyId(Long surveyId, FilterFoodRequestDto filterFoodRequestDto){
+        FilterFood filterFood = filterFoodRepository.findFilterFoodBySurveyId(surveyId);
+        filterFood.update(filterFoodRequestDto);
+        filterFoodRepository.save(filterFood);
+    }
 }

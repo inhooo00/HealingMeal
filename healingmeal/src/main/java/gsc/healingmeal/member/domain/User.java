@@ -1,5 +1,7 @@
 package gsc.healingmeal.member.domain;
 
+import gsc.healingmeal.member.dto.JoinChangeDto;
+import gsc.healingmeal.member.dto.JoinRequestDto;
 import gsc.healingmeal.member.execption.InvalidEmailAddressException;
 import gsc.healingmeal.member.execption.InvalidUserException;
 import gsc.healingmeal.survey.doamin.FilterFood;
@@ -90,4 +92,11 @@ public class User implements Serializable {
         }
     }
 
+    public void update(JoinChangeDto joinChangeDto) {
+        this.name = joinChangeDto.getName();
+        this.email = joinChangeDto.getEmail();
+        this.birthDate = joinChangeDto.getBirthDate();
+        this.gender = joinChangeDto.getGender();
+        this.phoneNumber = joinChangeDto.getPhoneNumber();
+    }
 }

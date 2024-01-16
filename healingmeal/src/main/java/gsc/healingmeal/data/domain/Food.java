@@ -1,5 +1,6 @@
 package gsc.healingmeal.data.domain;
 
+import gsc.healingmeal.survey.doamin.Survey;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,10 +18,23 @@ public class Food {
     private String foodName;
     private String foodCategory;
     private String representativeFoodName;
+
     private int Kcal;
     private float protein;
     private float fat;
     private float carbohydrate;
     private float sugar;
     private int sodium;
+
+    @OneToOne(mappedBy = "food",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private MainDishCategory mainDishCategory;
+
+    @OneToOne(mappedBy = "food",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private RiceCategory riceCategory;
+
+    @OneToOne(mappedBy = "food",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private SideDishCategory sideDishCategory;
+
+    @OneToOne(mappedBy = "food",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private SnackOrTeaCategory snackOrTeaCategory;
 }

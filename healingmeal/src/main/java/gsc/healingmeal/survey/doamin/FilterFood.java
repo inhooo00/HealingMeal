@@ -1,6 +1,7 @@
 package gsc.healingmeal.survey.doamin;
 
 import gsc.healingmeal.survey.dto.FilterFoodRequestDto;
+import gsc.healingmeal.survey.dto.SurveyRequestDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -57,5 +58,17 @@ public class FilterFood {
                 .dairyProducts(filterFoodRequestDto.getDairyProducts())
                 .survey(survey)
                 .build();
+    }
+    public void update(FilterFoodRequestDto filterFoodRequestDto){
+        this.stewsAndHotpots = filterFoodRequestDto.getStewsAndHotpots();
+        this.steamedFood = filterFoodRequestDto.getSteamedFood();
+        this.stirFriedFood = filterFoodRequestDto.getStirFriedFood();
+        this.grilledFood = filterFoodRequestDto.getGrilledFood();
+        this.vegetableFood = filterFoodRequestDto.getVegetableFood();
+        this.stewedFood = filterFoodRequestDto.getStewedFood();
+        this.pancakeFood = filterFoodRequestDto.getPancakeFood();
+        this.breadAndConfectionery = filterFoodRequestDto.getBreadAndConfectionery();
+        this.beveragesAndTeas = filterFoodRequestDto.getBeveragesAndTeas();
+        this.dairyProducts = filterFoodRequestDto.getDairyProducts();
     }
 }

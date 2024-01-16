@@ -43,7 +43,7 @@ public class Survey {
 
     private String weightLevel; // 현재 체중 단계
 
-    @OneToOne(mappedBy = "survey",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "survey", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private FilterFood filterFood;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -66,6 +66,21 @@ public class Survey {
                 .weightLevel(surveyRequestDto.getWeightLevel())
                 .user(user)
                 .build();
+    }
+
+    public void update(SurveyRequestDto surveyRequestDto) {
+        this.age = surveyRequestDto.getAge();
+        this.destination = surveyRequestDto.getDestination();
+        this.diabetesType = surveyRequestDto.getDiabetesType();
+        this.numberOfExercises = surveyRequestDto.getNumberOfExercises();
+        this.height = surveyRequestDto.getHeight();
+        this.weight = surveyRequestDto.getWeight();
+        this.gender = surveyRequestDto.getGender();
+        this.standardWeight = surveyRequestDto.getStandardWeight();
+        this.bodyMassIndex = surveyRequestDto.getBodyMassIndex();
+        this.caloriesNeededPerDay = surveyRequestDto.getCaloriesNeededPerDay();
+        this.weightLevel = surveyRequestDto.getWeightLevel();
+
     }
 
 }

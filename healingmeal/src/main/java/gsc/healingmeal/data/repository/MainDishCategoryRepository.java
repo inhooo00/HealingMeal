@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MainDishCategoryRepository extends JpaRepository<MainDishCategory, Long> {
-
+    MainDishCategory findById(long user_id);
 }

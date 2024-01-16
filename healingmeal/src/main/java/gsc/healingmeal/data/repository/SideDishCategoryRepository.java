@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SideDishCategoryRepository extends JpaRepository<SideDishCategory, Long> {
+    SideDishCategory findById(long id);
 }

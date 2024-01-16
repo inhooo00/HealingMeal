@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RiceCategoryRepository extends JpaRepository<RiceCategory, Long> {
+    RiceCategory findById(long id);
 }

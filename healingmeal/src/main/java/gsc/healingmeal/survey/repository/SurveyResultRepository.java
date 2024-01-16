@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SurveyResultRepository extends JpaRepository<SurveyResult, Long> {
     SurveyResult findSurveyResultByUser(User user);
+
+    SurveyResult findByUserId(Long userId);
 }

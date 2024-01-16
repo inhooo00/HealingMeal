@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SnackOrTeaCategoryRepository extends JpaRepository<SnackOrTeaCategory, Long> {
+    SnackOrTeaCategory findById(long id);
 }

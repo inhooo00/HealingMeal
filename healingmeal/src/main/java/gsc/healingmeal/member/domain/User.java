@@ -1,15 +1,14 @@
 package gsc.healingmeal.member.domain;
 
 import gsc.healingmeal.member.dto.JoinChangeDto;
-import gsc.healingmeal.member.dto.JoinRequestDto;
 import gsc.healingmeal.member.execption.InvalidEmailAddressException;
 import gsc.healingmeal.member.execption.InvalidUserException;
-import gsc.healingmeal.survey.doamin.FilterFood;
 import gsc.healingmeal.survey.doamin.Survey;
 import gsc.healingmeal.survey.doamin.SurveyResult;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -19,6 +18,7 @@ import java.util.regex.Pattern;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class User implements Serializable {
 
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[a-zA-Z0-9._%+-]+@gmail\\.com$");
@@ -69,9 +69,6 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public User() {
-
-    }
 
     private void validateEmail(String email) {
         Matcher matcher = EMAIL_PATTERN.matcher(email);

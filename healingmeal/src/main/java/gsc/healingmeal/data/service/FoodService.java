@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,10 +28,13 @@ public class FoodService {
     private final SnackOrTeaCategoryRepository snackCategoryRepository;
     private final MainDishCategoryRepository mainDishCategoryRepository;
 
+    @Value("${DATABASE_URL}")
+    String databaseUrl;
+
     @Transactional
     public void loadSave() throws Exception {
         JSONParser parser = new JSONParser();
-        Reader reader = new FileReader("/Users/inho/Downloads/-20240105.json");
+        Reader reader = new FileReader(databaseUrl);
         JSONArray records = (JSONArray) parser.parse(reader);
 
         for (Object record : records) {

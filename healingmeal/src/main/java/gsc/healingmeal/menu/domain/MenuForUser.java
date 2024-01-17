@@ -22,8 +22,6 @@ public class MenuForUser {
     //대표메뉴 = 구이류, 찌개 및 전골류, 전적 및 부침류, 찜류
     private String main_dish;
 
-    //대표메뉴 이미지 url
-    private String imageURL;
 
     //밥 = 밥류
     private String rice;

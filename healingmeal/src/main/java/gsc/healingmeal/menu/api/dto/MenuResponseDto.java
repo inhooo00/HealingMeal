@@ -34,6 +34,8 @@ public class MenuResponseDto {
     private float carbohydrate;
     private float fat;
 
+    private long user_id;
+
     @JsonIgnore
     //유저 구분
     private User user;

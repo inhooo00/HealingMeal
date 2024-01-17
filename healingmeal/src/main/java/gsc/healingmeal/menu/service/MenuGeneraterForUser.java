@@ -89,8 +89,6 @@ public class MenuGeneraterForUser {
         Survey survey = surveyRepository.findByUserId(user_id); //유저의 설문조사 번호를 찾기 위한 변수
         FilterFood filterFoodResponseDto = filterFoodRepository.findFilterFoodBySurveyId(survey.getId()); //유저의 필터링 내용 가져오기
 
-        MainDishCategory mainDishCategory = mainDishCategoryRepository.findById(secureRandom.nextLong(recordCountForMain+1));
-
         //유저필터링 내용 저장
         //dto로 가져온 필터 키워드는 접미사로 -Keyword인 리스트에만 저장하고, ','를 제외한 List로 옮길 땐 접미사가 -List임.
         String[] mainDishFilterKeywords = {filterFoodResponseDto.getStewsAndHotpots(),filterFoodResponseDto.getGrilledFood(),filterFoodResponseDto.getGrilledFood(),filterFoodResponseDto.getPancakeFood()};
@@ -100,14 +98,22 @@ public class MenuGeneraterForUser {
         for (String food : mainDishFilterKeywords) {
             filterList.addAll(Arrays.asList(food.split(",")));
         }
+        
+        //랜덤하게 대표메뉴 가져오고, null이 아닌지 재차 확인함.
+        Optional<MainDishCategory> optionalMainDish = mainDishCategoryRepository.findById(secureRandom.nextLong(recordCountForMain+1));
+        while (optionalMainDish.isEmpty()){
+            optionalMainDish = mainDishCategoryRepository.findById(secureRandom.nextLong(recordCountForMain+1));
+        }
 
-        //대표식품명이 필터링 키워드에 포함되지 않을 때까지 반복재생한다.
-        while(filterList.contains(mainDishCategory.getRepresentativeFoodName())){
-            mainDishCategory = mainDishCategoryRepository.findById(secureRandom.nextLong(recordCountForMain+1));
-            if (mainDishCategory == null){
-                mainDishCategory = mainDishCategoryRepository.findById(secureRandom.nextLong(recordCountForMain+1));
+        //대표식품명이 필터링 키워드에 포함되지 않을 때까지 반복한다.
+        while(filterList.contains(optionalMainDish.get().getRepresentativeFoodName())){
+            optionalMainDish = mainDishCategoryRepository.findById(secureRandom.nextLong(recordCountForMain+1));
+            if (optionalMainDish.isEmpty()){
+                optionalMainDish = mainDishCategoryRepository.findById(secureRandom.nextLong(recordCountForMain+1));
             }
         }
+        MainDishCategory mainDishCategory = optionalMainDish.get();
+
 
         /*
             밥
@@ -269,21 +275,15 @@ public class MenuGeneraterForUser {
 
         Optional<SnackOrTeaCategory> optional = snackOrTeaCategoryRepository.findById(secureRandom.nextLong(recordCountForSnackOrTea+1));
         SnackOrTeaCategory snackOrTeaCategory;
-        while(optional.isEmpty()) {
-            optional = snackOrTeaCategoryRepository.findById(secureRandom.nextLong(recordCountForSnackOrTea+1));
-            snackOrTeaCategory = optional.get();
-            while (filterList.contains(snackOrTeaCategory.getRepresentativeFoodName())) {
-                optional = snackOrTeaCategoryRepository.findById(secureRandom.nextLong(recordCountForSnackOrTea + 1));
-                if (snackOrTeaCategory == null) {
-                    optional = snackOrTeaCategoryRepository.findById(secureRandom.nextLong(recordCountForSnackOrTea + 1));
-                }
-            }
+        while (filterList.contains(optional.get().getRepresentativeFoodName()) || optional.isEmpty()) {
+            optional = snackOrTeaCategoryRepository.findById(secureRandom.nextLong(recordCountForSnackOrTea + 1));
         }
         snackOrTeaCategory = optional.get();
 
-
         SnackURL snackURL = snackUrlRepository.findBySnackUrlNameStartingWith(snackOrTeaCategory.getRepresentativeFoodName());
 
+        Optional<User> optionalUser = userRepository.findById(user_id);
+        User user = optionalUser.get();
 
         return SnackOrTeaResponseDto.builder()
                 .snack_or_tea(snackOrTeaCategory.getRepresentativeFoodName())
@@ -293,6 +293,8 @@ public class MenuGeneraterForUser {
                 .protein(snackOrTeaCategory.getProtein())
                 .fat(snackOrTeaCategory.getFat())
                 .meals(meals)
+                .userId(user_id)
+                .user(user)
                 .build();
     }
 

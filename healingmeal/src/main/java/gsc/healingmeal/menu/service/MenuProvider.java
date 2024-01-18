@@ -12,6 +12,7 @@ import gsc.healingmeal.menu.domain.repository.SnackOrTeaMenuRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +29,7 @@ public class MenuProvider {
     private String bucket_name;
 
     //유저를 위한 전체 식단 생성 및 유효 검사 메소드
+    @Transactional
     public void generateForUser(long user_id){
         Meals[] meals = {Meals.breakfast, Meals.lunch, Meals.dinner, Meals.breakfast_snackOrTea, Meals.lunch_snackOrTea};
         MenuResponseDto[] menus = new MenuResponseDto[meals.length-2];

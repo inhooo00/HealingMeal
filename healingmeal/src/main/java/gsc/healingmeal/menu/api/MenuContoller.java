@@ -3,7 +3,6 @@ package gsc.healingmeal.menu.api;
 import gsc.healingmeal.menu.api.dto.MenuResponseDto;
 import gsc.healingmeal.menu.api.dto.SnackOrTeaResponseDto;
 import gsc.healingmeal.menu.domain.Meals;
-import gsc.healingmeal.menu.service.MenuGeneraterForUser;
 import gsc.healingmeal.menu.service.MenuProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class MenuContoller {
-    private final MenuGeneraterForUser menuGeneraterForUser;
     private final MenuProvider menuProvider;
     
 

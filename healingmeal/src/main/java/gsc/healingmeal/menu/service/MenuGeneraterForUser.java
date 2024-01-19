@@ -26,7 +26,6 @@ import gsc.healingmeal.survey.repository.SurveyResultRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -75,7 +74,6 @@ public class MenuGeneraterForUser {
 
     //설문조사 결과(칼탄단지, 필터링 키워드)를 가지고 아침 간식 점심 간식 저녁
     //식단 생성(아침, 점심, 저녁만)
-
     public MenuResponseDto generateMenu(Meals meals, Long user_id){
         //식품 테이블에서 대표메뉴, 반찬, 밥을 랜덤하게 각각 가져옴. 단, 필터링을 적용함.
         //아래 코드는 난수를 생성하여 랜덤하게 식단을 가져오게 할 class
@@ -219,7 +217,6 @@ public class MenuGeneraterForUser {
     }
 
     //아점저 식단 저장
-    @Transactional
     public void saveMenu(MenuResponseDto menu){
         MenuForUser menuForUser = MenuForUser.builder()
                 .main_dish(menu.getMain_dish())
@@ -241,7 +238,6 @@ public class MenuGeneraterForUser {
     }
 
     //간식 저장
-    @Transactional
     public void saveSnackOrTea(SnackOrTeaResponseDto snackOrTeaResponseDto){
         SnackOrTea snackOrTea = SnackOrTea.builder()
                 .snack_or_tea(snackOrTeaResponseDto.getSnack_or_tea())

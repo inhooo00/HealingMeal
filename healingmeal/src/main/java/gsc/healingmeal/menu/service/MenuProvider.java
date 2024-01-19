@@ -31,7 +31,7 @@ public class MenuProvider {
     //유저를 위한 전체 식단 생성 및 유효 검사 메소드
     @Transactional
     public void generateForUser(long user_id){
-        Meals[] meals = {Meals.breakfast, Meals.lunch, Meals.dinner, Meals.breakfast_snackOrTea, Meals.lunch_snackOrTea};
+        Meals[] meals = Meals.values();
         MenuResponseDto[] menus = new MenuResponseDto[meals.length-2];
         SnackOrTeaResponseDto[] snackOrTeas = new SnackOrTeaResponseDto[meals.length-3];
 

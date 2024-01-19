@@ -30,35 +30,35 @@ public class MenuContoller {
     //아침 식단 제공
     @GetMapping("/{userId}/provide/breakfast")
     public ResponseEntity<MenuResponseDto> breakfast(@PathVariable Long userId) {
-        MenuResponseDto menuResponseDto = menuProvider.provide(userId, Meals.breakfast);
+        MenuResponseDto menuResponseDto = menuProvider.provide(userId, Meals.BREAKFAST);
         return new ResponseEntity<>(menuResponseDto, HttpStatus.OK);
     }
 
     //점심 식단 제공
     @GetMapping("/{userId}/provide/lunch")
     public ResponseEntity<MenuResponseDto> lunch(@PathVariable Long userId) {
-        MenuResponseDto menuResponseDto = menuProvider.provide(userId, Meals.lunch);
+        MenuResponseDto menuResponseDto = menuProvider.provide(userId, Meals.LUNCH);
         return new ResponseEntity<>(menuResponseDto, HttpStatus.OK);
     }
 
     //저녁 식단 제공
     @GetMapping("/{userId}/provide/dinner")
     public ResponseEntity<MenuResponseDto> dinner(@PathVariable Long userId) {
-        MenuResponseDto menuResponseDto = menuProvider.provide(userId, Meals.dinner);
+        MenuResponseDto menuResponseDto = menuProvider.provide(userId, Meals.DINNER);
         return new ResponseEntity<>(menuResponseDto, HttpStatus.OK);
     }
 
     //아침-점심 간식 제공
     @GetMapping("/{userId}/provide/breakfast-snack-or-tea")
     public ResponseEntity<SnackOrTeaResponseDto> breakfastSnackOrTea(@PathVariable Long userId) {
-        SnackOrTeaResponseDto snackOrTeaResponseDto = menuProvider.provideSnackOrTea(userId, Meals.breakfast_snackOrTea);
+        SnackOrTeaResponseDto snackOrTeaResponseDto = menuProvider.provideSnackOrTea(userId, Meals.BREAKFAST_SNACKORTEA);
         return new ResponseEntity<>(snackOrTeaResponseDto, HttpStatus.OK);
     }
 
     //점심-저녁 간식 제공
     @GetMapping("/{userId}/provide/lunch-snack-or-tea")
     public ResponseEntity<SnackOrTeaResponseDto> lunchSnackOrTea(@PathVariable Long userId) {
-        SnackOrTeaResponseDto snackOrTeaResponseDto = menuProvider.provideSnackOrTea(userId, Meals.lunch_snackOrTea);
+        SnackOrTeaResponseDto snackOrTeaResponseDto = menuProvider.provideSnackOrTea(userId, Meals.LUNCH_SNACKORTEA);
         return new ResponseEntity<>(snackOrTeaResponseDto, HttpStatus.OK);
     }
 }

@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class MenuProvider {
-    private final MenuGeneraterForUser menuGeneraterForUser;
+    private final MenuGenerater menuGenerater;
     private final MenuRepository menuRepository;
     private final SideDishForUserMenuRepository sideDishForUserMenuRepository;
     private final SnackOrTeaMenuRepository snackOrTeaMenuRepository;
@@ -38,18 +38,18 @@ public class MenuProvider {
         do {
             for (int i = 0; i < meals.length; i++) {
                 if (i < 3) {
-                    menus[i] = menuGeneraterForUser.generateMenu(meals[i], user_id);
+                    menus[i] = menuGenerater.generateMenu(meals[i], user_id);
                 } else {
-                    snackOrTeas[i-3] = menuGeneraterForUser.generateSnackOrTea(meals[i], user_id);
+                    snackOrTeas[i-3] = menuGenerater.generateSnackOrTea(meals[i], user_id);
                 }
             }
-        } while (menuGeneraterForUser.isExceed(user_id, menus[0], snackOrTeas[0], menus[1], snackOrTeas[1], menus[2]));
+        } while (menuGenerater.isExceed(user_id, menus[0], snackOrTeas[0], menus[1], snackOrTeas[1], menus[2]));
 
         for (MenuResponseDto dto : menus){
-            menuGeneraterForUser.saveMenu(dto);
+            menuGenerater.saveMenu(dto);
         }
         for (SnackOrTeaResponseDto dto : snackOrTeas){
-            menuGeneraterForUser.saveSnackOrTea(dto);
+            menuGenerater.saveSnackOrTea(dto);
         }
     }
 

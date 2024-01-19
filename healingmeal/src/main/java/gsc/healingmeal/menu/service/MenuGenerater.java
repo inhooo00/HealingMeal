@@ -35,7 +35,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class MenuGeneraterForUser {
+public class MenuGenerater {
 
     private final UserRepository userRepository;
 
@@ -271,7 +271,7 @@ public class MenuGeneraterForUser {
 
         Optional<SnackOrTeaCategory> optional = snackOrTeaCategoryRepository.findById(secureRandom.nextLong(recordCountForSnackOrTea+1));
         SnackOrTeaCategory snackOrTeaCategory;
-        while (filterList.contains(optional.get().getRepresentativeFoodName())) {
+        while (filterList.contains(optional.get().getRepresentativeFoodName()) || optional.isEmpty()) {
             optional = snackOrTeaCategoryRepository.findById(secureRandom.nextLong(recordCountForSnackOrTea + 1));
         }
         snackOrTeaCategory = optional.get();

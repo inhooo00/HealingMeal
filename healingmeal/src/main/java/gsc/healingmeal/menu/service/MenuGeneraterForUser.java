@@ -271,7 +271,7 @@ public class MenuGeneraterForUser {
 
         Optional<SnackOrTeaCategory> optional = snackOrTeaCategoryRepository.findById(secureRandom.nextLong(recordCountForSnackOrTea+1));
         SnackOrTeaCategory snackOrTeaCategory;
-        while (filterList.contains(optional.get().getRepresentativeFoodName()) || optional.isEmpty()) {
+        while (filterList.contains(optional.get().getRepresentativeFoodName())) {
             optional = snackOrTeaCategoryRepository.findById(secureRandom.nextLong(recordCountForSnackOrTea + 1));
         }
         snackOrTeaCategory = optional.get();
@@ -329,12 +329,7 @@ public class MenuGeneraterForUser {
                 lunchSnackOrTea.getCarbohydrate() +
                 dinner.getCarbohydrate();
         
-        //식단의 열탄단지 합이 설문조사한 유저의 하루필요량을 하나라도 넘으면 true 반환
-        if (total_kcal > kcal_result || total_carborhydrate > carborhydrate_result || total_fat > fat_result || total_protein > protein_result){
-            return true;
-        }
-        
-        //넘지 않는다면 false 반환
-        return false;
+        //식단의 열탄단지 합이 설문조사한 유저의 하루필요량을 하나라도 넘으면 true 아니면, false 반환
+        return total_kcal > kcal_result || total_carborhydrate > carborhydrate_result || total_fat > fat_result || total_protein > protein_result;
     }
 }

@@ -1,2 +1,9 @@
-##HealingMeal
-첫 프로젝트!
+### Project : HealingMeal
+
+- Jinyong Hyun
+
+- Inho Choi
+
+- Manjae Lee
+
+- Bojung Kim
